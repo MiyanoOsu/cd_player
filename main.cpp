@@ -3,6 +3,7 @@
 #include "input.h"
 #include "config.h"
 #include "audio.h"
+#include "font.h"
 
 u8 done = 0;
 
@@ -18,6 +19,7 @@ int main(int argc, char *argv[]) {
     }
 
     init_config();
+    init_font();
     init_video();
     init_audio();
 
@@ -29,5 +31,6 @@ int main(int argc, char *argv[]) {
     
     close_audio();
     close_video();
+    close_font();
     return 0;
 }

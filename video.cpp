@@ -1,6 +1,11 @@
 #include "video.h"
+#include "font.h"
 
 SDL_Surface* screen;
+
+SDL_Color black = {0,0,0};
+SDL_Color white = {255,255,255};
+
 
 void init_video() {
     if(SDL_Init(SDL_INIT_VIDEO)==-1) {
@@ -18,8 +23,13 @@ void init_video() {
     SDL_ShowCursor(SDL_DISABLE);
 }
 
+void test() {
+    draw_string("Testing...", screen, 10, 10, black);
+}
+
 void update_video() {
     SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format,73,106,204));
+    test();
     SDL_Flip(screen);
 }
 

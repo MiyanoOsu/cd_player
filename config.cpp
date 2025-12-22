@@ -2,6 +2,7 @@
 #include <SDL/SDL.h>
 
 char home_path[256], config_path[256];
+char *font_path = "DejaVuSans.ttf";
 
 void init_config() {
     snprintf(home_path, sizeof(home_path), "%s/cd", getenv("HOME"));
@@ -40,6 +41,8 @@ void load_config() {
         option.buttons[11] = SDLK_ESCAPE;
         option.buttons[12] = SDLK_RCTRL;
         option.buttons[13] = SDLK_RALT;
+        strcpy(option.font, font_path);
+        option.font_size = 15;
         save_config();
     }
 }

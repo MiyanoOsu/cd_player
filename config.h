@@ -6,6 +6,7 @@
 typedef struct {
 	u16 buttons[14];
     char font[256];
+    u8 font_size;
 } t_config;
 
 extern t_config option;

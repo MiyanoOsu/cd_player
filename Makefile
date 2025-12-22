@@ -4,13 +4,13 @@ CROSS_COMPILE =
 
 CC = $(CROSS_COMPILE)g++
 
-OBJS = config.o input.o video.o decoder.o audio.o main.o
+OBJS = config.o input.o video.o font.o decoder.o audio.o main.o
 
 VPATH = ./
 
 CFLAGS = -I. -O2 `/usr/bin/sdl-config --cflags`
 
-LDFLAGS = `/usr/bin/sdl-config --libs` -lasound
+LDFLAGS = `/usr/bin/sdl-config --libs` -lasound -lSDL_ttf
 
 all: $(TARGET)
 
