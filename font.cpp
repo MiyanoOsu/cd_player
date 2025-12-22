@@ -1,6 +1,7 @@
 #include "common.h"
 #include "font.h"
 #include "config.h"
+#include "audio.h"
 #include "input.h"
 
 #include <SDL/SDL_ttf.h>
@@ -28,6 +29,7 @@ void init_font() {
 
 SDL_Rect dirty_rects[MAX_DIRTY];
 u8 dirty_count = 0;
+u8 state = 1;
 
 void draw_string(const char *string, SDL_Surface *surface, s16 x, s16 y, SDL_Color font_color) {
     int w = 0, h = 0;
@@ -36,7 +38,14 @@ void draw_string(const char *string, SDL_Surface *surface, s16 x, s16 y, SDL_Col
     SDL_Rect dst = {x, y, (u16)w, (u16)h};
 
     // graphics dirty rectangles
-    if (dirty_count < MAX_DIRTY) {
+    if(state) {
+        dirty_rects[dirty_count].x = 5;
+        dirty_rects[dirty_count].y = 20 + 9*20;
+        dirty_rects[dirty_count].w = w;
+        dirty_rects[dirty_count].h = h;
+        dirty_count++;
+        state = 0;
+    } else if (dirty_count < MAX_DIRTY) {
         dirty_rects[dirty_count].x = 35;
         dirty_rects[dirty_count].y = y;
         dirty_rects[dirty_count].w = 320-35;

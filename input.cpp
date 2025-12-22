@@ -1,5 +1,6 @@
 #include "input.h"
 #include "video.h"
+#include "audio.h"
 #include "cd.h"
 
 t_config option;
@@ -26,6 +27,16 @@ void handle_input() {
                         index_list = 0;
                     }
                     update_bg = 1;
+                } else if(event.key.keysym.sym == BTN_LEFT) {
+                    play_song(--current_song);
+                } else if(event.key.keysym.sym == BTN_RIGHT) {
+                    play_song(++current_song);
+                } else if(event.key.keysym.sym == BTN_A) {
+                    current_song = index_list;
+                    play_song(index_list);
+                } else if(event.key.keysym.sym == BTN_B) {
+                    toggle_pause();
+                    state = 1;
                 }
             break;
         }

@@ -7,6 +7,7 @@ u32 channels;
 u32 depth;
 u32 max_samples;
 u32 samples_decoded = 0;
+u8 is_paused = 0;
 
 std::vector<s32> decoder_output;
 // Output buffers
@@ -82,6 +83,8 @@ snd_pcm_t* setup_alsa(u32 sample_rate, u32 channels, u32 bits_per_sample) {
 }
 
 void init_audio() {
+    new (&decoder) flac::FLACDecoder(read_buffer.data(), DISK_BUFFER_SIZE, MIN_BUFFER_SIZE);
+    
     if (decoder.read_header() != flac::FLAC_DECODER_SUCCESS) {
         std::cerr << "Failed to read FLAC header." << std::endl;
         return;
@@ -109,6 +112,9 @@ void init_audio() {
 }
 
 void update_audio() {
+    if (is_paused) {
+        return;
+    }
     res = decoder.decode_frame(decoder_output.data(), &samples_decoded);
 
     if (res == flac::FLAC_DECODER_NO_MORE_FRAMES) {
@@ -153,6 +159,24 @@ void update_audio() {
             done = 1;
             return;
         }
+    }
+}
+
+void toggle_pause() {
+    if (!pcm_handle) return;
+    
+    if(!is_paused) {
+        is_paused = 1;
+    } else {
+        is_paused = 0;
+    }
+
+    if (is_paused) {
+        // Tell ALSA to stop processing the buffer immediately but keep the data
+        snd_pcm_pause(pcm_handle, 1); 
+    } else {
+        // Resume playback
+        snd_pcm_pause(pcm_handle, 0);
     }
 }
 

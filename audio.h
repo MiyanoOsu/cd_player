@@ -15,9 +15,11 @@
 // Refill buffer when less than 1KB remains
 #define MIN_BUFFER_SIZE 1024
 
+extern u8 is_paused;
 
 void init_audio();
 void update_audio();
 void close_audio();
+void toggle_pause();
 
 #endif // _AUDIO_H_

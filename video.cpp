@@ -1,5 +1,6 @@
 #include "video.h"
 #include "font.h"
+#include "audio.h"
 #include "cd.h"
 
 SDL_Surface* screen, *layout;
@@ -12,7 +13,6 @@ SDL_Color yellow = {219,196,10};
 s16 index_list = 0;
 u16 offset = 0;
 u8 MAX_VISIBLE_LIST = 9;
-
 
 void init_video() {
     if(SDL_Init(SDL_INIT_VIDEO)==-1) {
@@ -46,18 +46,24 @@ void draw_layout() {
     if(max_list < MAX_VISIBLE_LIST) {
         for(u8 i = 0; i < max_list; i++) {
             if(i == index_list)
-                draw_string(playlist[i], layout, update_text_pos(playlist[i], i), 20 + (i - offset) * 20, white);
+                draw_string(playlist[i], layout, update_text_pos(playlist[i], i), 15 + (i - offset) * 20, white);
             else
-                draw_string(playlist[i], layout, 35, 20 + (i - offset) * 20, black);
+                draw_string(playlist[i], layout, 35, 15 + (i - offset) * 20, black);
         }
     } else {
         for(u16 i = offset; i < offset + MAX_VISIBLE_LIST; i++) {
             if(i == index_list)
-                draw_string(playlist[i], layout, update_text_pos(playlist[i], i), 20 + (i - offset) * 20, white);
+                draw_string(playlist[i], layout, update_text_pos(playlist[i], i), 15 + (i - offset) * 20, white);
             else
-                draw_string(playlist[i], layout, 35, 20 + (i - offset) * 20, black);
+                draw_string(playlist[i], layout, 35, 15 + (i - offset) * 20, black);
         }
     }
+    if(!is_paused) {
+        draw_string("playing...", layout, 5, 20 + 9*20, white);
+    } else {
+        draw_string("stop...", layout, 5, 20 + 9*20, white);
+    }
+    draw_string(playlist[current_song], layout, 50, 20+10*20, white);
 }
 
 u8 update_bg = 1;

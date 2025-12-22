@@ -1,12 +1,15 @@
 #include "common.h"
 #include "cd.h"
 #include "font.h"
+#include "audio.h"
 #include "video.h"
 #include <dirent.h>
 
 u16 max_list = 0;
 char *playlist[1024] = {NULL};
 char *current_directory = NULL;
+FILE *fp;
+u16 current_song = 0;
 
 char *short_path(const char *fullpath) {
     static char result[128];
@@ -32,11 +35,30 @@ char *short_path(const char *fullpath) {
     return result;
 }
 
+void load_song(char* song) {
+    fp = freopen(song, "rb", stdin);
+    if (fp == nullptr) {
+        perror("Failed to open file");
+        return;
+    }
+    
+}
+
+void play_song(int index) {
+    fclose(fp);
+    char next_song[512];
+    snprintf(next_song, sizeof(next_song) ,"%s/%s",current_directory, playlist[index]);
+    load_song(next_song);
+    close_audio();
+    init_audio();
+}
+
 void load_first_position(char *current_file) {
     for(s16 i = 0; i < max_list; i++) {
         // compare current loaded file with playplist
         if(strcmp(current_file, playlist[i]) == 0) {
             index_list = i;
+            current_song = index_list;
             offset = i - 4;
             break;
         }
@@ -74,7 +96,7 @@ s16 update_text_pos(char *filename, u16 index) {
     return pos_x;
 }
 
-void get_list_file(char * open_directory, u16 *out_count, char **list) {
+void get_list_file(char *open_directory, u16 *out_count, char **list) {
     struct dirent *directory_entry;
 
     DIR *directory = opendir(open_directory);

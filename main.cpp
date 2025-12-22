@@ -15,7 +15,7 @@ void init_playlist(char *current_file) {
     strncpy(fullpath1, current_file, sizeof(fullpath1));
     strncpy(fullpath2, current_file, sizeof(fullpath2));
     
-    current_directory = dirname(fullpath1);
+    current_directory = strdup(dirname(fullpath1));
     load_list_file();
     load_first_position(basename(fullpath2));
 }
@@ -23,10 +23,7 @@ void init_playlist(char *current_file) {
 
 int main(int argc, char *argv[]) {
     if (argc > 1) {
-        if (std::freopen(argv[1], "rb", stdin) == nullptr) {
-            std::perror("Failed to open file");
-            return 1;
-        }
+        load_song(argv[1]);
     } else {
         std::cout << "Usage: " << argv[0] << " <flac_file>" << std::endl;
         return 1;
