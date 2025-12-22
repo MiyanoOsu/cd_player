@@ -63,8 +63,8 @@ void draw_layout() {
 u8 update_bg = 1;
 
 void update_video() {
-    SDL_BlitSurface(layout,NULL,screen,NULL);
     draw_layout();
+    SDL_BlitSurface(layout,NULL,screen,NULL);
     if(update_bg) {
         SDL_Flip(screen);
         update_bg = 0;

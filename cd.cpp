@@ -1,6 +1,7 @@
 #include "common.h"
 #include "cd.h"
 #include "font.h"
+#include "video.h"
 #include <dirent.h>
 
 u16 max_list = 0;
@@ -29,6 +30,17 @@ char *short_path(const char *fullpath) {
     }
 
     return result;
+}
+
+void load_first_position(char *current_file) {
+    for(s16 i = 0; i < max_list; i++) {
+        // compare current loaded file with playplist
+        if(strcmp(current_file, playlist[i]) == 0) {
+            index_list = i;
+            offset = i - 4;
+            break;
+        }
+    }
 }
 
 s16 update_text_pos(char *filename, u16 index) {

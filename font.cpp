@@ -34,23 +34,12 @@ void draw_string(const char *string, SDL_Surface *surface, s16 x, s16 y, SDL_Col
     
     TTF_SizeText(font, string, &w, &h);
     SDL_Rect dst = {x, y, (u16)w, (u16)h};
-    
-    // printf("Font color: R=%d, G=%d, B=%d\n",
-    //    font_color.r,
-    //    font_color.g,
-    //    font_color.b);
 
     // graphics dirty rectangles
-    if (dirty_count == 0) {
-        dirty_rects[dirty_count].x = 0;
-        dirty_rects[dirty_count].y = 0;
-        dirty_rects[dirty_count].w = 320;
-        dirty_rects[dirty_count].h = 240;
-        dirty_count++;
-    } else if (dirty_count < MAX_DIRTY) {
-        dirty_rects[dirty_count].x = x;
+    if (dirty_count < MAX_DIRTY) {
+        dirty_rects[dirty_count].x = 35;
         dirty_rects[dirty_count].y = y;
-        dirty_rects[dirty_count].w = w;
+        dirty_rects[dirty_count].w = 320-35;
         dirty_rects[dirty_count].h = h;
         dirty_count++;
     }

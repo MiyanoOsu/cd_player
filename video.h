@@ -6,6 +6,7 @@
 
 extern SDL_Surface *screen;
 extern s16 index_list;
+extern u16 offset;
 extern u8 update_bg;
 
 void init_video();
