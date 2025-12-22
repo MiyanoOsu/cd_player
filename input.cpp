@@ -19,11 +19,13 @@ void handle_input() {
                     if(index_list < 0) {
                         index_list = max_list-1;
                     }
+                    update_bg = 1;
                 } else if(event.key.keysym.sym == BTN_DOWN) {
                     index_list++;
                     if(index_list > max_list-1) {
                         index_list = 0;
                     }
+                    update_bg = 1;
                 }
             break;
         }

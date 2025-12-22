@@ -60,10 +60,18 @@ void draw_layout() {
     }
 }
 
+u8 update_bg = 1;
+
 void update_video() {
     SDL_BlitSurface(layout,NULL,screen,NULL);
     draw_layout();
-    SDL_Flip(screen);
+    if(update_bg) {
+        SDL_Flip(screen);
+        update_bg = 0;
+    } else if (dirty_count > 0) {
+        SDL_UpdateRects(screen, dirty_count, dirty_rects);
+        dirty_count = 0; // reset for the next frame
+    }
 }
 
 void close_video() {
