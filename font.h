@@ -7,7 +7,7 @@
 #define MAX_DIRTY 64
 
 
-extern SDL_Color black, white;
+extern SDL_Color black, white, orange, yellow;
 
 extern SDL_Rect dirty_rects[];
 extern u8 dirty_count;

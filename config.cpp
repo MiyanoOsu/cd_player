@@ -6,7 +6,7 @@ char *font_path = "DejaVuSans.ttf";
 
 void init_config() {
     snprintf(home_path, sizeof(home_path), "%s/cd", getenv("HOME"));
-    snprintf(config_path, sizeof(config_path), "cd.cfg");
+    snprintf(config_path, sizeof(config_path), "cd.conf");
     load_config();
 }
 

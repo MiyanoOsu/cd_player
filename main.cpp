@@ -4,6 +4,7 @@
 #include "config.h"
 #include "audio.h"
 #include "font.h"
+#include "cd.h"
 
 u8 done = 0;
 
@@ -18,6 +19,8 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    current_directory = dirname(argv[1]);
+    load_list_file();
     init_config();
     init_font();
     init_video();
