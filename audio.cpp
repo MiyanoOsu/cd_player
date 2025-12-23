@@ -119,7 +119,11 @@ void update_audio() {
     res = decoder.decode_frame(decoder_output.data(), &samples_decoded);
 
     if (res == flac::FLAC_DECODER_NO_MORE_FRAMES) {
-        play_song(++current_song);
+        current_song++;
+        if(current_song == max_list) {
+            current_song = 0;
+        }
+        play_song(current_song);
         return;
     }
     if (res != flac::FLAC_DECODER_SUCCESS) {
