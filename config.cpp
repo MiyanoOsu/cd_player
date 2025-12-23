@@ -2,7 +2,7 @@
 #include <SDL/SDL.h>
 
 char home_path[256], config_path[256];
-char *font_path = "DejaVuSans.ttf";
+const char *font_path = "SourceHanSansJP-Regular.otf";
 
 void init_config() {
     snprintf(home_path, sizeof(home_path), "%s/cd", getenv("HOME"));

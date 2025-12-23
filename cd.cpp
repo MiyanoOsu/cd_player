@@ -59,6 +59,7 @@ void load_first_position(char *current_file) {
         if(strcmp(current_file, playlist[i]) == 0) {
             index_list = i;
             current_song = index_list;
+            if(i < 4) break;
             offset = i - 4;
             break;
         }
@@ -68,28 +69,14 @@ void load_first_position(char *current_file) {
 s16 update_text_pos(char *filename, u16 index) {
     static s16 pos_x = 35;
     static u16 old_index = index;
-#ifndef MIYOO
-    static u8 frame = 0;
-#endif
     // reset when index change
     if( old_index != index) {
         old_index = index;
         pos_x = 35;
-#ifndef MIYOO
-        frame = 0;
-#endif
     }
     // check if legth text in pixel is long
     if(get_text_width(filename) >= 320 - 35) {
-#ifndef MIYOO
-        frame++;
-        if(frame > 20) {
-            pos_x -= 1;
-            frame = 0;
-        }
-#else
         pos_x-=1;
-#endif
         if(pos_x < 245 - get_text_width(filename))
             pos_x = 35;
     }
