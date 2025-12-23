@@ -1,4 +1,5 @@
 #include "audio.h"
+#include "cd.h"
 #include "config.h"
 
 snd_pcm_t *pcm_handle;
@@ -118,7 +119,7 @@ void update_audio() {
     res = decoder.decode_frame(decoder_output.data(), &samples_decoded);
 
     if (res == flac::FLAC_DECODER_NO_MORE_FRAMES) {
-        done = 1;
+        play_song(++current_song);
         return;
     }
     if (res != flac::FLAC_DECODER_SUCCESS) {

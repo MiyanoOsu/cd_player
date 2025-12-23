@@ -9,6 +9,7 @@ extern u16 max_list;
 extern char *playlist[1024];
 extern char *current_directory;
 extern FILE *fp;
+extern u16 current_song;
 
 s16 update_text_pos(char *filename, u16 index);
 void load_first_position(char *file);

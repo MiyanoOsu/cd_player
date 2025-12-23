@@ -61,7 +61,7 @@ void draw_layout() {
     if(!is_paused) {
         draw_string("playing...", layout, 5, 20 + 9*20, white);
     } else {
-        draw_string("stop...", layout, 5, 20 + 9*20, white);
+        draw_string("stopped", layout, 5, 20 + 9*20, white);
     }
     draw_string(playlist[current_song], layout, 50, 20+10*20, white);
 }

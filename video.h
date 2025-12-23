@@ -9,7 +9,6 @@ extern s16 index_list;
 extern u16 offset;
 extern u8 update_bg;
 extern u8 state;
-extern u16 current_song;
 
 void init_video();
 void update_video();
