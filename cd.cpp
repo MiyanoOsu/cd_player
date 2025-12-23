@@ -97,7 +97,8 @@ void get_list_file(char *open_directory, u16 *out_count, char **list) {
         if (strcmp(directory_entry->d_name, ".") == 0
         || strcmp(directory_entry->d_name, "..") == 0)
             continue;
-        if(directory_entry->d_type == DT_REG) {
+        char *extension = strrchr(directory_entry->d_name, '.');
+        if(directory_entry->d_type == DT_REG && extension != NULL && strcmp(extension, ".flac") == 0) {
             list[count++] = strdup(directory_entry->d_name);
         }
     }
