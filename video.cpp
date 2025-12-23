@@ -66,6 +66,27 @@ void draw_layout() {
     draw_string(playlist[current_song], layout, 50, 20+10*20, white);
 }
 
+void lock_fps(uint8_t fps)
+{
+    // Use uint32_t to match SDL_GetTicks and prevent overflow every 65 seconds
+    static uint32_t lastTicks = 0; 
+    uint32_t currentTicks = SDL_GetTicks();
+    
+    // Calculate how many milliseconds one frame should take (e.g., 1000 / 60 = 16ms)
+    uint32_t targetTicks = 1000 / fps;
+
+    // Check how much time has passed since the last frame
+    uint32_t elapsedTicks = currentTicks - lastTicks;
+
+    // If the frame finished early, wait for the remaining time
+    if (elapsedTicks < targetTicks) {
+        SDL_Delay(targetTicks - elapsedTicks);
+    }
+
+    // Update lastTicks for the next cycle
+    lastTicks = SDL_GetTicks(); 
+}
+
 u8 update_bg = 1;
 
 void update_video() {
@@ -78,6 +99,14 @@ void update_video() {
         SDL_UpdateRects(screen, dirty_count, dirty_rects);
         dirty_count = 0; // reset for the next frame
     }
+    lock_fps(10); // due to the default block size of the FLAC format
+                  // and audio frames are different from video frames
+                  // it keep the program main loop run around 9-10 frame per seconds
+                  // so when pause music, it should lock program main loop at 10fps
+                  // Sample Rate: 44100 Hz (Samples per second)
+                  // Block Size: 4096 Samples (Samples per frame)
+                  // Duration of 1 frame = block size / sample rate = 4096 / 44100 = 0.0928 seconds
+                  // -> frame per second = 1/0928 = 10.7fps
 }
 
 void close_video() {
