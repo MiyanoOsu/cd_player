@@ -1,0 +1,2 @@
+#!/bin/sh
+sync; echo 'Installing new cd..'; rm /var/lib/opkg/info/cd.list; exit 0

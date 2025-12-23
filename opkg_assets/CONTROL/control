@@ -1,0 +1,10 @@
+Package: cd
+Version: 1.0.0
+Depends:
+Source: https://github.com/MiyanoOsu/cd_player
+License: GPL-2.0
+Description: cd app
+Section: applications
+Priority: optional
+Maintainer: MiyanoOsu
+Architecture: arm

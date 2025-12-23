@@ -11,6 +11,12 @@ extern char *current_directory;
 extern FILE *fp;
 extern u16 current_song;
 
+
+#ifdef MIYOO
+void screen_on();
+void screen_off();
+#endif // MIYOO
+
 s16 update_text_pos(char *filename, u16 index);
 void load_first_position(char *file);
 void load_song(char* song);

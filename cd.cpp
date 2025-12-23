@@ -11,6 +11,61 @@ char *current_directory = NULL;
 FILE *fp;
 u16 current_song = 0;
 
+#ifdef MIYOO
+
+#define MIYOO_LID_FILE  "/mnt/.backlight.conf"
+#define MIYOO_LID_CONF  "/sys/class/backlight/backlight/brightness"
+
+static int read_conf(const char *file) {
+  int i, fd;
+  int val = 5;
+  char buf[10]={0};
+  
+  fd = open(file, O_RDWR);
+  if(fd < 0){
+    val = -1;
+  }
+  else{
+    read(fd, buf, sizeof(buf));
+    for(i=0; i<strlen(buf); i++){
+      if(buf[i] == '\r'){
+        buf[i] = 0;
+      }
+      if(buf[i] == '\n'){
+        buf[i] = 0;
+      }
+      if(buf[i] == ' '){
+        buf[i] = 0;
+      }
+    }
+    val = atoi(buf);
+  }
+  close(fd);
+  return val;
+}
+
+void screen_on() {
+	int val;
+	FILE *f;
+  	char buf[3]={0};
+	val = read_conf(MIYOO_LID_FILE);
+	if (f = fopen(MIYOO_LID_CONF, "w")) {
+    	sprintf(buf, "%d\n", val);
+		fprintf(f, buf);
+		fclose(f);
+	}
+}
+
+void screen_off() {
+	FILE *f;
+	if ((f = fopen(MIYOO_LID_CONF, "w"))) {
+    	fprintf(f, "0\n");
+    	fclose(f);
+  }
+}
+
+#endif
+
 char *short_path(const char *fullpath) {
     static char result[128];
     char pathcopy1[128];

@@ -5,6 +5,10 @@
 
 t_config option;
 
+#ifdef MIYOO
+u8 is_screen = 1;
+#endif
+
 void handle_input() {
     SDL_Event event;
     while(SDL_PollEvent(&event)){
@@ -37,6 +41,16 @@ void handle_input() {
                 } else if(event.key.keysym.sym == BTN_B) {
                     toggle_pause();
                     state = 1;
+#ifdef MIYOO
+                } else if(event.key.keysym.sym == BTN_X) {
+                    if(!is_screen) {
+                        screen_on();
+                        is_screen = 1;
+                    } else {
+                        screen_off();
+                        is_screen = 0;
+                    }
+#endif
                 }
             break;
         }

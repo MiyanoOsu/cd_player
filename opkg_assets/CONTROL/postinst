@@ -1,0 +1,2 @@
+#!/bin/sh
+sync; echo 'Installation finished.'; echo 'Restarting cd..'; sleep 1; killall cd; exit 0

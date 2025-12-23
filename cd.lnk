@@ -1,0 +1,3 @@
+title=CD
+description=cd app
+exec=/mnt/apps/cd/cd
