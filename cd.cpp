@@ -114,7 +114,11 @@ void load_first_position(char *current_file) {
         if(strcmp(current_file, playlist[i]) == 0) {
             index_list = i;
             current_song = index_list;
-            if(i < 4) break;
+            if (i > max_list - 5) {
+                offset = max_list - 9;
+                break;
+            }
+            if (i < 4) break;
             offset = i - 4;
             break;
         }
