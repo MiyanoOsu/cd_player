@@ -51,6 +51,8 @@ void handle_input() {
                         is_screen = 0;
                     }
 #endif
+                } else if(event.key.keysym.sym == BTN_Y) {
+                    seek_forward(5);
                 }
             break;
         }

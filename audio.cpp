@@ -84,6 +84,7 @@ snd_pcm_t* setup_alsa(u32 sample_rate, u32 channels, u32 bits_per_sample) {
 }
 
 void init_audio() {
+    decoder.~FLACDecoder();
     new (&decoder) flac::FLACDecoder(read_buffer.data(), DISK_BUFFER_SIZE, MIN_BUFFER_SIZE);
     
     if (decoder.read_header() != flac::FLAC_DECODER_SUCCESS) {
@@ -116,6 +117,7 @@ void update_audio() {
     if (is_paused) {
         return;
     }
+    
     res = decoder.decode_frame(decoder_output.data(), &samples_decoded);
 
     if (res == flac::FLAC_DECODER_NO_MORE_FRAMES) {
@@ -165,6 +167,35 @@ void update_audio() {
             return;
         }
     }
+}
+
+void seek_forward(int seconds) {
+    if (!pcm_handle || is_paused) return;
+
+    // 1. Calculate how many samples to skip
+    u32 samples_to_skip = sample_rate * seconds;
+    u32 skipped_so_far = 0;
+
+    // 2. Pause ALSA output briefly to prevent glitching
+    snd_pcm_drop(pcm_handle);
+
+    // 3. Decode Loop: Read data but DO NOT write to ALSA
+    while (skipped_so_far < samples_to_skip) {
+        u32 frame_samples = 0;
+        
+        // Decode into the buffer, but ignore the result
+        res = decoder.decode_frame(decoder_output.data(), &frame_samples);
+
+        if (res != flac::FLAC_DECODER_SUCCESS) break; // End of song or error
+        
+        skipped_so_far += frame_samples;
+    }
+
+    // 4. Update your global counter (if you have a playback timer)
+    samples_decoded += skipped_so_far; // Approximate
+
+    // 5. Prepare ALSA to accept new data again
+    snd_pcm_prepare(pcm_handle);
 }
 
 void toggle_pause() {

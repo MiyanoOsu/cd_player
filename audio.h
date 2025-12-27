@@ -21,5 +21,6 @@ void init_audio();
 void update_audio();
 void close_audio();
 void toggle_pause();
+void seek_forward(int seconds);
 
 #endif // _AUDIO_H_
