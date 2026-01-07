@@ -32,9 +32,17 @@ void handle_input() {
                     }
                     update_bg = 1;
                 } else if(event.key.keysym.sym == BTN_LEFT) {
-                    play_song(--current_song);
+                    current_song--;
+                    if(current_song < 0) {
+                        current_song = max_list-1;
+                    }
+                    play_song(current_song);
                 } else if(event.key.keysym.sym == BTN_RIGHT) {
-                    play_song(++current_song);
+                    current_song++;
+                    if(current_song == max_list) {
+                        current_song = 0;
+                    }
+                    play_song(current_song);
                 } else if(event.key.keysym.sym == BTN_A) {
                     current_song = index_list;
                     play_song(index_list);

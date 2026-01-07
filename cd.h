@@ -9,7 +9,7 @@ extern u16 max_list;
 extern char *playlist[1024];
 extern char *current_directory;
 extern FILE *fp;
-extern u16 current_song;
+extern s16 current_song;
 
 
 #ifdef MIYOO

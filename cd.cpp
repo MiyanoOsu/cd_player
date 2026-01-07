@@ -9,7 +9,7 @@ u16 max_list = 0;
 char *playlist[1024] = {NULL};
 char *current_directory = NULL;
 FILE *fp;
-u16 current_song = 0;
+s16 current_song = 0;
 
 #ifdef MIYOO
 
