@@ -61,6 +61,12 @@ void handle_input() {
 #endif
                 } else if(event.key.keysym.sym == BTN_Y) {
                     seek_forward(5);
+                } else if(event.key.keysym.sym == BTN_L) {
+                    if(mode == 1) {
+                        mode = 0;
+                    } else {
+                        mode = 1;
+                    }
                 }
             break;
         }

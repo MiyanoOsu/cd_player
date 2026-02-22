@@ -10,7 +10,7 @@ extern char *playlist[1024];
 extern char *current_directory;
 extern FILE *fp;
 extern s16 current_song;
-
+extern u8 mode;
 
 #ifdef MIYOO
 void screen_on();

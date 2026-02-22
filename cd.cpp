@@ -10,6 +10,7 @@ char *playlist[1024] = {NULL};
 char *current_directory = NULL;
 FILE *fp;
 s16 current_song = 0;
+u8 mode = 0;
 
 #ifdef MIYOO
 

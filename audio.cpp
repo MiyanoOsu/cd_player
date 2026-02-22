@@ -121,12 +121,17 @@ void update_audio() {
     res = decoder.decode_frame(decoder_output.data(), &samples_decoded);
 
     if (res == flac::FLAC_DECODER_NO_MORE_FRAMES) {
-        current_song++;
-        if(current_song == max_list) {
-            current_song = 0;
+        if (mode == 0) {
+            current_song++;
+            if(current_song == max_list) {
+                current_song = 0;
+            }
+            play_song(current_song);
+            return;
+        } else if(mode == 1) {
+            play_song(current_song);
+            return;
         }
-        play_song(current_song);
-        return;
     }
     if (res != flac::FLAC_DECODER_SUCCESS) {
         std::cerr << "Error decoding frame: " << res << std::endl;

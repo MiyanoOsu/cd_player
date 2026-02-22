@@ -38,12 +38,14 @@ void init_video() {
 
 void draw_layout() {
     SDL_FillRect(layout, NULL, SDL_MapRGB(layout->format,73,106,204));
-    if(index_list < offset) 
+
+    if (index_list < offset) 
         offset = index_list;
-    if(index_list >= offset + MAX_VISIBLE_LIST)
+    
+    if (index_list >= offset + MAX_VISIBLE_LIST)
         offset = index_list - MAX_VISIBLE_LIST + 1;
 
-    if(max_list < MAX_VISIBLE_LIST) {
+    if (max_list < MAX_VISIBLE_LIST) {
         for(u8 i = 0; i < max_list; i++) {
             if(i == index_list)
                 draw_string(playlist[i], layout, update_text_pos(playlist[i], i), 15 + (i - offset) * 20, white);
@@ -58,12 +60,20 @@ void draw_layout() {
                 draw_string(playlist[i], layout, 35, 15 + (i - offset) * 20, black);
         }
     }
-    if(!is_paused) {
-        draw_string("playing...", layout, 5, 20 + 9*20, white);
+    
+    if (!is_paused) {
+        draw_string("Playing...", layout, 5, 20 + 9*20, white);
     } else {
-        draw_string("stopped", layout, 5, 20 + 9*20, white);
+        draw_string("Stopped", layout, 5, 20 + 9*20, white);
     }
-    draw_string(playlist[current_song], layout, 50, 20+10*20, white);
+    
+    if (!mode) {
+        draw_string("Mode: continuous", layout, 155, 20 + 9*20, white);
+    } else {
+        draw_string("Mode: repeat", layout, 155, 20 + 9*20, white);
+    }
+
+    draw_string(playlist[current_song], layout, 50, 20 + 10*20, white);
 }
 
 void lock_fps(uint8_t fps)

@@ -1,12 +1,12 @@
 #include "config.h"
 #include <SDL/SDL.h>
 
-char home_path[256], config_path[256];
-const char *font_path = "SourceHanSansJP-Regular.otf";
+char home_path[256], config_path[256], font_path[256];
 
 void init_config() {
     snprintf(home_path, sizeof(home_path), "%s/.cd", getenv("HOME"));
     snprintf(config_path, sizeof(config_path), "%s/cd.conf",home_path);
+    snprintf(font_path, sizeof(font_path), "%s/SourceHanSansJP-Regular.otf", ".");
     if (access(home_path, F_OK ) == -1) mkdir(home_path,0755);
     load_config();
 }
@@ -14,8 +14,7 @@ void init_config() {
 void save_config() {
 	FILE* fp;
 	fp = fopen(config_path, "wb");
-	if (fp)
-	{
+	if (fp) {
 		fwrite(&option, sizeof(option), sizeof(int8_t), fp);
 		fclose(fp);
 	}
